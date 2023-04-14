@@ -1,0 +1,8 @@
+init: Zelda
+accept: klaus,kinski,maria
+
+q1,q2
+q3,q2,1
+
+q1,q4
+q1,q4,2

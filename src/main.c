@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <getopt.h>
+#include "tm.h"
 
 /* Flag set by ‘--verbose’. */
 static int verbose_flag;
+char *filename;
 
 int
 main (int argc, char **argv)
@@ -46,6 +48,7 @@ main (int argc, char **argv)
 
         case 'f':
           printf ("option -f with value `%s'\n", optarg);
+          filename = optarg;
           break;
 
         case '?':
@@ -71,6 +74,8 @@ main (int argc, char **argv)
         printf ("%s ", argv[optind++]);
       putchar ('\n');
     }
+  create_tm(filename);
+
 
   exit (0);
 }
