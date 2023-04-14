@@ -25,11 +25,11 @@ int create_tm(char *filename) {
             printf("Compilation failed.\n");
             exit(1);
         }
-        printf("%s\n", init);
+        printf("init: %s\n", init);
     }
     else {
         printf("Compilation failed.\n");
-            exit(1);
+        exit(1);
     }
     /* Extracting the accepting states of the TM. */
     if (getline(&str, &len, fd) != -1) {
@@ -48,11 +48,18 @@ int create_tm(char *filename) {
 
     while (1) {
         if (getline(&str, &len, fd) != -1) {
-            if (strcmp("\n", str) == 0) {
+            if (strcmp("\n", str) == 0)
                 continue;
-            }
             if (str[0] == 'q') {
+                if (!strstr(str, ",")) {
+                    printf("Compilation failed.\n");
+                    exit(1); 
+                }
                 token = strtok(str, ",");
+                if(token == NULL) {
+                    printf("Compilation failed.\n");
+                    exit(1);
+                }
                 printf("%s,", token);
                 token = strtok(str, "\n");
                 printf("%s\n", token);
@@ -62,9 +69,8 @@ int create_tm(char *filename) {
                 exit(1);
             }
         }
-        else {
+        else
             break;
-        }
 
         if (getline(&str, &len, fd) != -1) {
             if (strcmp("\n", str) == 0) {
@@ -72,20 +78,31 @@ int create_tm(char *filename) {
             }
             if (str[0] == 'q') {
                 token = strtok(str, ",");
+                if(token == NULL) {
+                    printf("Compilation failed.\n");
+                    exit(1);
+                }
                 printf("%s,", token);
                 token = strtok(NULL, ",");
+                if(token == NULL) {
+                    printf("Compilation failed.\n");
+                    exit(1);
+                }
                 printf("%s,", token);
                 token = strtok(NULL, "\n");
-                printf("%s\n", token);
+                if(token == NULL) {
+                    printf("Compilation failed.\n");
+                    exit(1);
+                }
+                printf("%s\n\n", token);
             }
             else {
                 printf("Compilation failed.\n");
                 exit(1);
             }
         }
-        else {
+        else
             break;
-        }
     }
     fclose(fd);
     free(str);
