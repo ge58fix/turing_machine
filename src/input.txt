@@ -2,10 +2,10 @@ init: Zelda
 accept: klaus,kinski,maria
 
 q1,q2
-q3,q2,1
+q3,q2,-
 
 q1,4
-q1,q4,3
+q1,q4,>
 
 q3,2
-q3,4,3
+q3,4,<

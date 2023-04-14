@@ -1,10 +1,10 @@
 #ifndef INFO_H
 #define INFO_H
 
-typedef struct Tape
+typedef struct tape
 {
    char content;
-   struct Tape *prev;
-   struct Tape *next;
-};
+   struct tape *prev;
+   struct tape *next;
+} Tape;
 #endif

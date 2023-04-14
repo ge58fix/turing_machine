@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "transitions.h"
 #include "tm.h"
+#include "transition.h"
 #include <string.h>
 
 int create_tm(char *filename) {
@@ -9,6 +11,8 @@ int create_tm(char *filename) {
     size_t len = 0;
     char *token;
     char *init;
+    Transitions *head = (Transitions*) malloc(sizeof(Transitions));
+    head->transition = NULL;
 
     if ((fd = fopen(filename, "r")) == NULL) {
         printf("Error! File %s could not be opened.\n", filename);
@@ -47,25 +51,32 @@ int create_tm(char *filename) {
     }
 
     while (1) {
+        Transition *t = NULL;
         if (getline(&str, &len, fd) != -1) {
             if (strcmp("\n", str) == 0)
                 continue;
+            t = (Transition*) malloc(sizeof(Transition));
             if (str[0] == 'q') {
                 if (!strstr(str, ",")) {
                     printf("Compilation failed.\n");
+                    free(t);
                     exit(1); 
                 }
                 token = strtok(str, ",");
+                t->current_state = token;
                 if(token == NULL) {
                     printf("Compilation failed.\n");
+                    free(t);
                     exit(1);
                 }
                 printf("%s,", token);
                 token = strtok(str, "\n");
+                t->symbol = token;
                 printf("%s\n", token);
             }
             else {
                 printf("Compilation failed.\n");
+                free(t);
                 exit(1);
             }
         }
@@ -78,22 +89,30 @@ int create_tm(char *filename) {
             }
             if (str[0] == 'q') {
                 token = strtok(str, ",");
+                t->next_state = token;
                 if(token == NULL) {
                     printf("Compilation failed.\n");
+                    free(t);
                     exit(1);
                 }
                 printf("%s,", token);
                 token = strtok(NULL, ",");
+                t->write_symbol = token;
                 if(token == NULL) {
                     printf("Compilation failed.\n");
+                    free(t);
                     exit(1);
                 }
                 printf("%s,", token);
                 token = strtok(NULL, "\n");
-                if(token == NULL) {
+                char c = token[0];
+                if(token == NULL || !(c == '-'|| c == '<'|| c == '>')) {
                     printf("Compilation failed.\n");
+                    free(t);
                     exit(1);
                 }
+                t->direction = token[0];
+                add(head, t);
                 printf("%s\n\n", token);
             }
             else {

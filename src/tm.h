@@ -3,8 +3,9 @@
 
 typedef struct tm
 {
-    char *input_alphabet;
+    char *alphabet;
     char *init;
+
 } TURING_MACHINE;
 
 int create_tm(char*);

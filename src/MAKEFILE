@@ -1,1 +1,3 @@
-gcc -o hellomake main.c tm.c -I.
+turing_machine: main.c tm.c transitions.c
+	gcc -o turing_machine main.c tm.c transitions.c -I.
+	./turing_machine -f ./input.txt
