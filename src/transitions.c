@@ -1,7 +1,6 @@
+#include "transitions.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "transition.h"
-#include "transitions.h"
 
 Transitions add(Transitions *head, Transition *t) {
    Transitions *link = (Transitions*) malloc(sizeof(Transitions));

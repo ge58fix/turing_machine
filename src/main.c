@@ -22,12 +22,13 @@ main (int argc, char **argv)
           /* These options don’t set a flag.
              We distinguish them by their indices. */
           {"file",    required_argument, 0, 'f'},
+          {"input",   required_argument, 0, 'i'},
           {0, 0, 0, 0}
         };
       /* getopt_long stores the option index here. */
       int option_index = 0;
 
-      c = getopt_long (argc, argv, "f:",
+      c = getopt_long (argc, argv, "f:i:",
                        long_options, &option_index);
 
       /* Detect the end of the options. */
@@ -48,6 +49,11 @@ main (int argc, char **argv)
 
         case 'f':
           printf ("option -f with value `%s'\n", optarg);
+          filename = optarg;
+          break;
+
+        case 'i':
+          printf ("option -i with value `%s'\n", optarg);
           filename = optarg;
           break;
 
@@ -75,7 +81,5 @@ main (int argc, char **argv)
       putchar ('\n');
     }
   create_tm(filename);
-
-
   exit (0);
 }

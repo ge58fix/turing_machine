@@ -8,3 +8,9 @@ typedef struct tape
    struct tape *next;
 } Tape;
 #endif
+
+Tape create_tape(char*);
+Tape *tape_add(Tape*, char, char) {
+
+}
+

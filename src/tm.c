@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "transitions.h"
 #include "tm.h"
-#include "transition.h"
 #include <string.h>
 
 int create_tm(char *filename) {
