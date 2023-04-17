@@ -4,41 +4,34 @@
 #include <string.h>
 
 int create_tm(char *filename, Turing_Machine* tm) {
-    //tm = calloc(1, sizeof(Turing_Machine));
     FILE *fd;
     char *str = NULL;
     size_t len = 0;
     char *token;
-    char *init;
-    char input_alphabet[32];
-    char tape_alphabet[32];
-    Transitions *head = (Transitions*) calloc(1, sizeof(Transitions));
+    Transitions *head = (Transitions *) calloc(1, sizeof(Transitions));
     head->transition = NULL;
 
     if ((fd = fopen(filename, "r")) == NULL) {
         printf("Error! File %s could not be opened.\n", filename);
-        exit(1);
+        return EXIT_FAILURE;
     }
-
-    //TODO: replace token with variables specific
 
     if (getline(&str, &len, fd) != -1) {
         char temp[32];
         strncpy(temp, str, 16);
         temp[16] = '\0';
 
-        if (!(strcmp("input_alphabet: ", temp) == 0 && strtok(str, " ") != NULL && (token = strtok(NULL, "\n")) != NULL)) {
+        if (!(strcmp("input_alphabet: ", temp) == 0 && strtok(str, " ") != NULL &&
+              (token = strtok(NULL, "\n")) != NULL)) {
             printf("Compilation failed.\n");
-            exit(1);
+            return EXIT_FAILURE;
         }
-        strncpy(input_alphabet, token, 31);
-        input_alphabet[31] = '\0';
-        tm->input_alphabet = input_alphabet;
-        printf("input_alphabet: %s\n", input_alphabet);
-    }
-    else {
+        strncpy(tm->input_alphabet, token, 31);
+        tm->input_alphabet[31] = '\0';
+        printf("input_alphabet: %s\n", tm->input_alphabet);
+    } else {
         printf("Compilation failed.\n");
-        exit(1);
+        return EXIT_FAILURE;
     }
 
     if (getline(&str, &len, fd) != -1) {
@@ -46,18 +39,17 @@ int create_tm(char *filename, Turing_Machine* tm) {
         strncpy(temp, str, 15);
         temp[15] = '\0';
 
-        if (!(strcmp("tape_alphabet: ", temp) == 0 && strtok(str, " ") != NULL && (token = strtok(NULL, "\n")) != NULL)) {
+        if (!(strcmp("tape_alphabet: ", temp) == 0 && strtok(str, " ") != NULL &&
+              (token = strtok(NULL, "\n")) != NULL)) {
             printf("Compilation failed.\n");
-            exit(1);
+            return EXIT_FAILURE;
         }
-        strncpy(tape_alphabet, token, 31);
-        tape_alphabet[31] = '\0';
-        tm->tape_alphabet = tape_alphabet;
-        printf("tape_alphabet: %s\n", tape_alphabet);
-    }
-    else {
+        strncpy(tm->tape_alphabet, token, 31);
+        tm->tape_alphabet[31] = '\0';
+        printf("tape_alphabet: %s\n", tm->tape_alphabet);
+    } else {
         printf("Compilation failed.\n");
-        exit(1);
+        return EXIT_FAILURE;
     }
 
     /* Extracting the initial state of the TM. */
@@ -66,15 +58,14 @@ int create_tm(char *filename, Turing_Machine* tm) {
         strncpy(temp, str, 6);
         temp[6] = '\0';
 
-        if (!(strcmp("init: ", temp) == 0 && strtok(str, " ") != NULL && (init = strtok(NULL, "\n")) != NULL)) {
+        if (!(strcmp("init: ", temp) == 0 && strtok(str, " ") != NULL && (token = strtok(NULL, "\n")) != NULL)) {
             printf("Compilation failed.\n");
             exit(1);
         }
-        printf("init: %s\n", init);
-    }
-    else {
-        printf("Compilation failed.\n");
-        exit(1);
+        strncpy(tm->current_state, token, 15);
+        tm->current_state[15] = '\0';
+        printf("init: %s\n", tm->current_state);
+
     }
     /* Extracting the accepting states of the TM. */
     if (getline(&str, &len, fd) != -1) {
@@ -101,7 +92,7 @@ int create_tm(char *filename, Turing_Machine* tm) {
                 if (!strstr(str, ",")) {
                     printf("Compilation failed.\n");
                     free(t);
-                    exit(1); 
+                    exit(1);
                 }
                 token = strtok(str, ",");
                 t->current_state = token;
@@ -164,10 +155,8 @@ int create_tm(char *filename, Turing_Machine* tm) {
         else
             break;
     }
-    tm->input_alphabet = input_alphabet;
-    tm->current_state = init;
     tm->head = head;
     fclose(fd);
     free(str);
-    exit(0);
+    return EXIT_SUCCESS;
 }

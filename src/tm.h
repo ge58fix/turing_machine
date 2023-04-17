@@ -4,9 +4,9 @@
 
 typedef struct tm
 {
-    char *input_alphabet;
-    char *tape_alphabet;
-    char *current_state;
+    char input_alphabet[32];
+    char tape_alphabet[32];
+    char current_state[16];
     Transitions *head;
     
 } Turing_Machine;

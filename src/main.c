@@ -81,6 +81,12 @@ main (int argc, char **argv)
       putchar ('\n');
     }
   Turing_Machine *tm = calloc(1, sizeof(Turing_Machine));
-  create_tm(filename, tm);
+  if(create_tm(filename, tm)) {
+      printf("Reading %s failed.\n", filename);
+      exit(1);
+  }
+  printf("tape_alpha: %s\n", tm->tape_alphabet);
+  printf("input_alpha: %s\n", tm->input_alphabet);
+  printf("current_state: %s\n", tm->current_state);
   exit(0);
 }

@@ -1,10 +1,8 @@
-#include <stdio.h>
 #include <stdlib.h>
-#include <getopt.h>
 #include <string.h>
 #include "tape.h"
 
-Tape create_tape(char *input) {
+Tape* create_tape(char *input) {
     int len = strlen(input);
     Tape *t = calloc(1, sizeof(Tape));
     for (int i = 0; i < len; i++) {
@@ -13,7 +11,7 @@ Tape create_tape(char *input) {
     return t;
 }
 
-Tape tape_add(Tape *t, char direction, char input) {
+Tape* tape_add(Tape *t, char direction, char input) {
     Tape *head = t;
     Tape *t_new = calloc(1, sizeof(Tape));
     t->content = input;

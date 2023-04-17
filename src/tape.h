@@ -9,8 +9,6 @@ typedef struct tape
 } Tape;
 #endif
 
-Tape create_tape(char*);
-Tape *tape_add(Tape*, char, char) {
-
-}
+Tape* create_tape(char*);
+Tape* tape_add(Tape* tape, char direction, char input);
 
