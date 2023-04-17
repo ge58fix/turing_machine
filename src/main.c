@@ -80,6 +80,7 @@ main (int argc, char **argv)
         printf ("%s ", argv[optind++]);
       putchar ('\n');
     }
-  create_tm(filename);
-  exit (0);
+  Turing_Machine *tm = calloc(1, sizeof(Turing_Machine));
+  create_tm(filename, tm);
+  exit(0);
 }

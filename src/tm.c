@@ -3,17 +3,60 @@
 #include "tm.h"
 #include <string.h>
 
-int create_tm(char *filename) {
+int create_tm(char *filename, Turing_Machine* tm) {
+    //tm = calloc(1, sizeof(Turing_Machine));
     FILE *fd;
     char *str = NULL;
     size_t len = 0;
     char *token;
     char *init;
-    Transitions *head = (Transitions*) malloc(sizeof(Transitions));
+    char input_alphabet[32];
+    char tape_alphabet[32];
+    Transitions *head = (Transitions*) calloc(1, sizeof(Transitions));
     head->transition = NULL;
 
     if ((fd = fopen(filename, "r")) == NULL) {
         printf("Error! File %s could not be opened.\n", filename);
+        exit(1);
+    }
+
+    //TODO: replace token with variables specific
+
+    if (getline(&str, &len, fd) != -1) {
+        char temp[32];
+        strncpy(temp, str, 16);
+        temp[16] = '\0';
+
+        if (!(strcmp("input_alphabet: ", temp) == 0 && strtok(str, " ") != NULL && (token = strtok(NULL, "\n")) != NULL)) {
+            printf("Compilation failed.\n");
+            exit(1);
+        }
+        strncpy(input_alphabet, token, 31);
+        input_alphabet[31] = '\0';
+        tm->input_alphabet = input_alphabet;
+        printf("input_alphabet: %s\n", input_alphabet);
+    }
+    else {
+        printf("Compilation failed.\n");
+        exit(1);
+    }
+
+    if (getline(&str, &len, fd) != -1) {
+        char temp[16];
+        strncpy(temp, str, 15);
+        temp[15] = '\0';
+
+        if (!(strcmp("tape_alphabet: ", temp) == 0 && strtok(str, " ") != NULL && (token = strtok(NULL, "\n")) != NULL)) {
+            printf("Compilation failed.\n");
+            exit(1);
+        }
+        strncpy(tape_alphabet, token, 31);
+        tape_alphabet[31] = '\0';
+        tm->tape_alphabet = tape_alphabet;
+        printf("tape_alphabet: %s\n", tape_alphabet);
+    }
+    else {
+        printf("Compilation failed.\n");
         exit(1);
     }
 
@@ -121,6 +164,9 @@ int create_tm(char *filename) {
         else
             break;
     }
+    tm->input_alphabet = input_alphabet;
+    tm->current_state = init;
+    tm->head = head;
     fclose(fd);
     free(str);
     exit(0);

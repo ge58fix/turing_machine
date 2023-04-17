@@ -1,3 +1,5 @@
+input_alphabet: kab
+tape_alphabet: kel
 init: Zelda
 accept: klaus,kinski,maria
 

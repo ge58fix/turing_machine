@@ -4,11 +4,12 @@
 
 typedef struct tm
 {
-    char *alphabet;
+    char *input_alphabet;
+    char *tape_alphabet;
     char *current_state;
     Transitions *head;
     
-} TURING_MACHINE;
+} Turing_Machine;
 
-int create_tm(char*);
+int create_tm(char*, Turing_Machine*);
 #endif
