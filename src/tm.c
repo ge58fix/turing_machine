@@ -3,6 +3,11 @@
 #include "tm.h"
 #include <string.h>
 
+
+
+// TODO: Create data structure for accepting states.
+// TODO: Fixing the Transitions.
+
 int create_tm(char *filename, Turing_Machine* tm) {
     FILE *fd;
     char *str = NULL;
@@ -92,14 +97,14 @@ int create_tm(char *filename, Turing_Machine* tm) {
                 if (!strstr(str, ",")) {
                     printf("Compilation failed.\n");
                     free(t);
-                    exit(1);
+                    return EXIT_FAILURE;
                 }
                 token = strtok(str, ",");
                 t->current_state = token;
                 if(token == NULL) {
                     printf("Compilation failed.\n");
                     free(t);
-                    exit(1);
+                    return EXIT_FAILURE;
                 }
                 printf("%s,", token);
                 token = strtok(str, "\n");
@@ -109,7 +114,7 @@ int create_tm(char *filename, Turing_Machine* tm) {
             else {
                 printf("Compilation failed.\n");
                 free(t);
-                exit(1);
+                return EXIT_FAILURE;
             }
         }
         else
@@ -125,7 +130,7 @@ int create_tm(char *filename, Turing_Machine* tm) {
                 if(token == NULL) {
                     printf("Compilation failed.\n");
                     free(t);
-                    exit(1);
+                    return EXIT_FAILURE;
                 }
                 printf("%s,", token);
                 token = strtok(NULL, ",");
@@ -133,7 +138,7 @@ int create_tm(char *filename, Turing_Machine* tm) {
                 if(token == NULL) {
                     printf("Compilation failed.\n");
                     free(t);
-                    exit(1);
+                    return EXIT_FAILURE;
                 }
                 printf("%s,", token);
                 token = strtok(NULL, "\n");
@@ -141,7 +146,7 @@ int create_tm(char *filename, Turing_Machine* tm) {
                 if(token == NULL || !(c == '-'|| c == '<'|| c == '>')) {
                     printf("Compilation failed.\n");
                     free(t);
-                    exit(1);
+                    return EXIT_FAILURE;
                 }
                 t->direction = token[0];
                 add(head, t);
@@ -149,7 +154,7 @@ int create_tm(char *filename, Turing_Machine* tm) {
             }
             else {
                 printf("Compilation failed.\n");
-                exit(1);
+                return EXIT_FAILURE;
             }
         }
         else
@@ -160,3 +165,16 @@ int create_tm(char *filename, Turing_Machine* tm) {
     free(str);
     return EXIT_SUCCESS;
 }
+
+int validate(char* input_alpha, char* input) {
+    int i=0;
+    char c;
+    while(1) {
+        c = input[i];
+        if(c == '\0') break;
+        if(strchr(input, c) != NULL) return 0;
+        i++;
+    }
+    return 1;
+}
+

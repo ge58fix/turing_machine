@@ -1,7 +1,7 @@
 input_alphabet: kab
 tape_alphabet: kel
 init: Zelda
-accept: klaus,kinski,maria
+accept: q2,q4
 
 q1,q2
 q3,q2,-

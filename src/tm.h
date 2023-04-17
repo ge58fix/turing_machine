@@ -12,4 +12,5 @@ typedef struct tm
 } Turing_Machine;
 
 int create_tm(char*, Turing_Machine*);
+int validate(char*, char*);
 #endif
