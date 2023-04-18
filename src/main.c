@@ -12,6 +12,7 @@ main (int argc, char **argv)
 {
   int c;
   char input[300];
+  input[0] = 'w'; //Default input including just the letter 'w' for the blank.
 
   while (1)
     {
@@ -93,5 +94,6 @@ main (int argc, char **argv)
   printf("tape_alpha: %s\n", tm->tape_alphabet);
   printf("input_alpha: %s\n", tm->input_alphabet);
   printf("current_state: %s\n", tm->current_state);
+  simulate(tm, input);
   exit(0);
 }

@@ -176,8 +176,8 @@ int validate(char* input_alpha, const char* input) {
     return EXIT_SUCCESS;
 }
 
-int simulate(Turing_Machine *tm, char* input) {
-    const char blank = tm->input_alphabet[0];
+void simulate(Turing_Machine *tm, char* input) {
+    char blank = tm->input_alphabet[0];
     char *current_state = tm->current_state;
     Tape *tape = create_tape(input);
     Tape *current_tape = tape;
@@ -191,14 +191,13 @@ int simulate(Turing_Machine *tm, char* input) {
         }
         if (!accept(tm->accepted_states, current_state)) {
             printf("REJECT\n");
-            break;
+            //break;
         }
         current_tape_symbol = (current_tape == NULL || current_tape->content == '\0') ? blank : current_tape->content;
         current_transition = get_transition(tm->head, current_state, current_tape_symbol);
         current_state = current_transition->next_state;
         current_tape->content = current_transition->write_symbol;
-        current_tape = move( current_tape, current_transition ->direction, blank);
+        current_tape = move(current_tape, current_transition ->direction, blank);
     }
-    return EXIT_SUCCESS;
 }
 

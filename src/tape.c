@@ -13,8 +13,12 @@ Tape* create_tape(char *input) {
 
 Tape* tape_add(Tape *t, char direction, char input) {
     Tape *head = t;
+    if (head->content == '\0') {
+        head->content = input;
+        return head;
+    }
     Tape *t_new = calloc(1, sizeof(Tape));
-    t->content = input;
+    t_new->content = input;
     if (direction == '<') {
         while (t->prev != NULL) {
             t = t->prev;

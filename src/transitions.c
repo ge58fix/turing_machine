@@ -24,7 +24,7 @@ Transition *get_transition(Transitions* head, const char* state, char symbol) {
     while(1) {
         if(head==NULL) return NULL;
         t = head->transition;
-        if(t->current_state == state && t->symbol == symbol)
+        if(strcmp(t->current_state, state) == 0 && t->symbol == symbol)
             return t;
         head = head->next;
     }
