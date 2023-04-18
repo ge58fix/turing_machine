@@ -8,3 +8,4 @@ typedef struct state_list
 
 
 State_List *insert_state(State_List*, char*);
+int accept(State_List *h, char* state);

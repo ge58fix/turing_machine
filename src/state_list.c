@@ -24,3 +24,13 @@ State_List *insert_state(State_List* h, char* state) {
     return h;
 }
 
+int accept(State_List *h, char* state) {
+    while (h->next != NULL) {
+        if (strcmp(h->state, state) == 0) {
+            return 1;
+        }
+        h = h->next;
+    }
+    return 0;
+}
+

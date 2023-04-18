@@ -30,3 +30,9 @@
 2	173	1681804752910878758	CMakeFiles/turing_machine.dir/src/tm.c.o	817c61e250aec8fe
 1	237	1681804752977135266	CMakeFiles/turing_machine.dir/src/main.c.o	b0fddcd2fac2f0b7
 237	371	1681804753111797009	turing_machine	7d5c6526f4374654
+5	429	1681819074996398466	CMakeFiles/turing_machine.dir/src/main.c.o	b0fddcd2fac2f0b7
+10	432	1681819075001240046	CMakeFiles/turing_machine.dir/src/tm.c.o	817c61e250aec8fe
+8	457	1681819075028318377	CMakeFiles/turing_machine.dir/src/tape.c.o	f3a0d91475ada9be
+430	555	1681819075129463473	CMakeFiles/turing_machine.dir/src/transitions.c.o	500795f67db42ddf
+432	560	1681819075135187359	CMakeFiles/turing_machine.dir/src/state_list.c.o	17d7fec0cc80301c
+560	728	1681819075305762529	turing_machine	7d5c6526f4374654

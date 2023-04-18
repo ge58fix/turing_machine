@@ -34,3 +34,19 @@ Tape* tape_add(Tape *t, char direction, char input) {
     }
     return head;
 }
+
+Tape* move(Tape *t, char dir, char blank) {
+    if (dir == '<') {
+        if (t->prev == NULL) {
+            t = tape_add(t, '<', blank);
+        }
+        return t->prev;
+    }
+    if (dir == '>') {
+        if (t->next == NULL) {
+            t = tape_add(t, '>', blank);
+        }
+        return t->next;
+    }
+    return NULL;
+}

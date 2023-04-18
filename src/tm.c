@@ -1,10 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "tm.h"
+#include "tape.h"
 #include <string.h>
-#include "state_list.h"
 #define SIZE_A 16
-#define SIZE_B 32
 
 
 
@@ -81,9 +80,9 @@ int create_tm(char *filename, Turing_Machine* tm) {
                 states = insert_state(states, token);
                 printf("accept: %s\n", token);
                 token = strtok(NULL, ",");
-                //printf("States: %s", states->next->state);
             }
         }
+        tm->accepted_states = states;
     }
 
     while (1) {
@@ -107,7 +106,7 @@ int create_tm(char *filename, Turing_Machine* tm) {
                     return EXIT_FAILURE;
                 }
                 token = strtok(NULL, "\n");
-                snprintf(t->symbol, sizeof (t->symbol), "%s", token);
+                strncpy(&t->symbol, &token[0], 1);
                 printf("%s\n", token);
             }
             else {
@@ -133,7 +132,7 @@ int create_tm(char *filename, Turing_Machine* tm) {
                 }
                 printf("%s,", token);
                 token = strtok(NULL, ",");
-                snprintf(t->write_symbol, sizeof (t->write_symbol), "%s", token);
+                strncpy(&t->write_symbol, &token[0], 1);
                 if(token == NULL) {
                     printf("Compilation failed.\n");
                     free(t);
@@ -177,7 +176,29 @@ int validate(char* input_alpha, const char* input) {
     return EXIT_SUCCESS;
 }
 
-int simulate(Turing_Machine tm, char* input) {
+int simulate(Turing_Machine *tm, char* input) {
+    const char blank = tm->input_alphabet[0];
+    char *current_state = tm->current_state;
+    Tape *tape = create_tape(input);
+    Tape *current_tape = tape;
+    char current_tape_symbol;
+    Transition *current_transition;
+
+    while (1) {
+        if (accept(tm->accepted_states, current_state)) {
+            printf("ACCEPT\n");
+            break;
+        }
+        if (!accept(tm->accepted_states, current_state)) {
+            printf("REJECT\n");
+            break;
+        }
+        current_tape_symbol = (current_tape == NULL || current_tape->content == '\0') ? blank : current_tape->content;
+        current_transition = get_transition(tm->head, current_state, current_tape_symbol);
+        current_state = current_transition->next_state;
+        current_tape->content = current_transition->write_symbol;
+        current_tape = move( current_tape, current_transition ->direction, blank);
+    }
     return EXIT_SUCCESS;
 }
 

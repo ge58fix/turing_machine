@@ -9,4 +9,5 @@ typedef struct transitions
 
 
 Transitions *add(Transitions*, Transition*);
+Transition *get_transition(Transitions* head, const char* state, char symbol);
 

@@ -19,12 +19,12 @@ Transitions *add(Transitions *h, Transition *t) {
     return h;
 }
 
-Transition *get_transition(Transitions* head, char* state, char* symbol) {
+Transition *get_transition(Transitions* head, const char* state, char symbol) {
     Transition *t;
     while(1) {
         if(head==NULL) return NULL;
         t = head->transition;
-        if(t->current_state == state && strcmp(state, symbol) == 0)
+        if(t->current_state == state && t->symbol == symbol)
             return t;
         head = head->next;
     }
