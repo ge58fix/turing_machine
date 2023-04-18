@@ -86,7 +86,10 @@ main (int argc, char **argv)
       printf("Reading %s failed.\n", filename);
       exit(1);
   }
-  validate(tm->input_alphabet, input);
+  if (validate(tm->input_alphabet, input)) {
+      printf("Illegal input!\n");
+      exit(1);
+  }
   printf("tape_alpha: %s\n", tm->tape_alphabet);
   printf("input_alpha: %s\n", tm->input_alphabet);
   printf("current_state: %s\n", tm->current_state);

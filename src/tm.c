@@ -165,15 +165,19 @@ int create_tm(char *filename, Turing_Machine* tm) {
     return EXIT_SUCCESS;
 }
 
-int validate(char* input_alpha, char* input) {
+int validate(char* input_alpha, const char* input) {
     int i=0;
     char c;
     while(1) {
         c = input[i];
         if(c == '\0') break;
-        if(strchr(input, c) != NULL) return 0;
+        if(strchr(input_alpha, c) == NULL) return EXIT_FAILURE;
         i++;
     }
-    return 1;
+    return EXIT_SUCCESS;
+}
+
+int simulate(Turing_Machine tm, char* input) {
+    return EXIT_SUCCESS;
 }
 

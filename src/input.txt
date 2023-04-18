@@ -1,7 +1,7 @@
-input_alphabet: kab
-tape_alphabet: kel
+input_alphabet: abcdefg
+tape_alphabet: abcdefg
 init: Zelda
-accept: q2,q4
+accept: q2,q4,q6
 
 q1,q2
 q3,q2,-
@@ -11,3 +11,6 @@ q1,q4,>
 
 q3,2
 q3,4,<
+
+q5,a
+q6,c,>
