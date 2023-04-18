@@ -3,7 +3,7 @@
 #include "tape.h"
 
 Tape* create_tape(char *input) {
-    int len = strlen(input);
+    int len = (int)strlen(input);
     Tape *t = calloc(1, sizeof(Tape));
     for (int i = 0; i < len; i++) {
         t = tape_add(t, '>', input[i]);

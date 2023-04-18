@@ -11,6 +11,7 @@ int
 main (int argc, char **argv)
 {
   int c;
+  char input[300];
 
   while (1)
     {
@@ -54,7 +55,7 @@ main (int argc, char **argv)
 
         case 'i':
           printf ("option -i with value `%s'\n", optarg);
-          filename = optarg;
+          snprintf(input, sizeof (input), "%s", optarg);
           break;
 
         case '?':
@@ -85,6 +86,7 @@ main (int argc, char **argv)
       printf("Reading %s failed.\n", filename);
       exit(1);
   }
+  validate(tm->input_alphabet, input);
   printf("tape_alpha: %s\n", tm->tape_alphabet);
   printf("input_alpha: %s\n", tm->input_alphabet);
   printf("current_state: %s\n", tm->current_state);

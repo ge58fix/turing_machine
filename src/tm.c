@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include "tm.h"
 #include <string.h>
+#include "state_list.h"
+#define SIZE_A 16
+#define SIZE_B 32
 
 
 
@@ -22,17 +25,15 @@ int create_tm(char *filename, Turing_Machine* tm) {
     }
 
     if (getline(&str, &len, fd) != -1) {
-        char temp[32];
-        strncpy(temp, str, 16);
-        temp[16] = '\0';
+        char temp[SIZE_A];
+        snprintf(temp, 16, str, "%s");
 
-        if (!(strcmp("input_alphabet: ", temp) == 0 && strtok(str, " ") != NULL &&
+        if (!(strcmp("input_alphabet:", temp) == 0 && strtok(str, " ") != NULL &&
               (token = strtok(NULL, "\n")) != NULL)) {
             printf("Compilation failed.\n");
             return EXIT_FAILURE;
         }
-        strncpy(tm->input_alphabet, token, 31);
-        tm->input_alphabet[31] = '\0';
+        snprintf(tm->input_alphabet, sizeof(tm->input_alphabet), "%s", token);
         printf("input_alphabet: %s\n", tm->input_alphabet);
     } else {
         printf("Compilation failed.\n");
@@ -40,17 +41,15 @@ int create_tm(char *filename, Turing_Machine* tm) {
     }
 
     if (getline(&str, &len, fd) != -1) {
-        char temp[16];
-        strncpy(temp, str, 15);
-        temp[15] = '\0';
+        char temp[SIZE_A];
+        snprintf(temp, 16, "%s", str);
 
         if (!(strcmp("tape_alphabet: ", temp) == 0 && strtok(str, " ") != NULL &&
               (token = strtok(NULL, "\n")) != NULL)) {
             printf("Compilation failed.\n");
             return EXIT_FAILURE;
         }
-        strncpy(tm->tape_alphabet, token, 31);
-        tm->tape_alphabet[31] = '\0';
+        snprintf(tm->tape_alphabet, sizeof(tm->tape_alphabet), "%s", token);
         printf("tape_alphabet: %s\n", tm->tape_alphabet);
     } else {
         printf("Compilation failed.\n");
@@ -60,29 +59,29 @@ int create_tm(char *filename, Turing_Machine* tm) {
     /* Extracting the initial state of the TM. */
     if (getline(&str, &len, fd) != -1) {
         char temp[8];
-        strncpy(temp, str, 6);
-        temp[6] = '\0';
+        snprintf(temp, 7, "%s", str);
 
         if (!(strcmp("init: ", temp) == 0 && strtok(str, " ") != NULL && (token = strtok(NULL, "\n")) != NULL)) {
             printf("Compilation failed.\n");
             exit(1);
         }
-        strncpy(tm->current_state, token, 15);
-        tm->current_state[15] = '\0';
+        snprintf(tm->current_state, sizeof (tm->current_state), "%s", token);
         printf("init: %s\n", tm->current_state);
 
     }
     /* Extracting the accepting states of the TM. */
     if (getline(&str, &len, fd) != -1) {
-        char temp[16];
-        strncpy(temp, str, 8);
-        temp[8] = '\0';
+        char temp[SIZE_A];
+        State_List *states = calloc(1, sizeof (State_List));
+        snprintf(temp, 9, "%s", str);
         if (strcmp("accept: ", temp) == 0) {
             strtok(str, " ");
             token = strtok(NULL, ",");
             while (token) {
+                states = insert_state(states, token);
                 printf("accept: %s\n", token);
                 token = strtok(NULL, ",");
+                //printf("States: %s", states->next->state);
             }
         }
     }
@@ -92,7 +91,7 @@ int create_tm(char *filename, Turing_Machine* tm) {
         if (getline(&str, &len, fd) != -1) {
             if (strcmp("\n", str) == 0)
                 continue;
-            t = (Transition*) malloc(sizeof(Transition));
+            t = (Transition*) calloc(1,sizeof(Transition));
             if (str[0] == 'q') {
                 if (!strstr(str, ",")) {
                     printf("Compilation failed.\n");
@@ -100,15 +99,15 @@ int create_tm(char *filename, Turing_Machine* tm) {
                     return EXIT_FAILURE;
                 }
                 token = strtok(str, ",");
-                t->current_state = token;
+                snprintf(t->current_state, sizeof (t->current_state), "%s", token);
+                printf("%s,", token);
                 if(token == NULL) {
                     printf("Compilation failed.\n");
                     free(t);
                     return EXIT_FAILURE;
                 }
-                printf("%s,", token);
-                token = strtok(str, "\n");
-                t->symbol = token;
+                token = strtok(NULL, "\n");
+                snprintf(t->symbol, sizeof (t->symbol), "%s", token);
                 printf("%s\n", token);
             }
             else {
@@ -126,7 +125,7 @@ int create_tm(char *filename, Turing_Machine* tm) {
             }
             if (str[0] == 'q') {
                 token = strtok(str, ",");
-                t->next_state = token;
+                snprintf(t->next_state, sizeof (t->next_state), "%s", token);
                 if(token == NULL) {
                     printf("Compilation failed.\n");
                     free(t);
@@ -134,7 +133,7 @@ int create_tm(char *filename, Turing_Machine* tm) {
                 }
                 printf("%s,", token);
                 token = strtok(NULL, ",");
-                t->write_symbol = token;
+                snprintf(t->write_symbol, sizeof (t->write_symbol), "%s", token);
                 if(token == NULL) {
                     printf("Compilation failed.\n");
                     free(t);
@@ -148,8 +147,8 @@ int create_tm(char *filename, Turing_Machine* tm) {
                     free(t);
                     return EXIT_FAILURE;
                 }
-                t->direction = token[0];
-                add(head, t);
+                strncpy(&t->direction, &token[0], 1);
+                head = add(head, t); // TODO: Head muss auch befüllt werden mit Transition
                 printf("%s\n\n", token);
             }
             else {

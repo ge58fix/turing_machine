@@ -8,5 +8,5 @@ typedef struct transitions
 
 
 
-Transitions add(Transitions*, Transition*);
+Transitions *add(Transitions*, Transition*);
 
