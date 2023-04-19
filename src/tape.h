@@ -8,4 +8,5 @@ typedef struct tape
 Tape* create_tape(char* input);
 Tape* tape_add(Tape* tape, char direction, char input);
 Tape* move(Tape *t, char dir, char blank);
+void tape_print(Tape* head);
 

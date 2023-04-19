@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 #include "tape.h"
 
 Tape* create_tape(char *input) {
@@ -53,4 +54,14 @@ Tape* move(Tape *t, char dir, char blank) {
         return t->next;
     }
     return NULL;
+}
+
+void tape_print(Tape* head) {
+    Tape* h = head;
+    printf("|%c|", h->content);
+    while(h->next != NULL) {
+        h = h->next;
+        printf("%c|", h->content);
+    }
+    printf("\n");
 }

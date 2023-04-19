@@ -185,13 +185,13 @@ void simulate(Turing_Machine *tm, char* input) {
     Transition *current_transition;
 
     while (1) {
+        tape_print(current_tape);
         if (accept(tm->accepted_states, current_state)) {
             printf("ACCEPT\n");
             break;
         }
         if (!accept(tm->accepted_states, current_state)) {
             printf("REJECT\n");
-            //break;
         }
         current_tape_symbol = (current_tape == NULL || current_tape->content == '\0') ? blank : current_tape->content;
         current_transition = get_transition(tm->head, current_state, current_tape_symbol);

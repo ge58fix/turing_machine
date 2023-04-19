@@ -1,16 +1,13 @@
 input_alphabet: abcdefg
 tape_alphabet: abcdefg
 init: q1
-accept: q4,q6
+accept: q6
 
 q1,a
-q4,b,-
+q4,b,>
 
-q3,b
-q1,a,>
-
-q3,a
-q3,b,<
+q4,b
+q4,a,>
 
 q4,a
-q6,b,>
+q6,b,<

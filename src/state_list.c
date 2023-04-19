@@ -25,7 +25,10 @@ State_List *insert_state(State_List* h, char* state) {
 }
 
 int accept(State_List *h, char* state) {
-    while (h->next != NULL) {
+    if (strcmp(h->state, state) == 0) {
+        return 1;
+    }
+        while (h->next != NULL) {
         if (strcmp(h->state, state) == 0) {
             return 1;
         }
