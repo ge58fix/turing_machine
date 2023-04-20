@@ -140,8 +140,13 @@ int create_tm(char *filename, Turing_Machine* tm) {
                 }
                 printf("%s,", token);
                 token = strtok(NULL, "\n");
+                if (token == NULL) {
+                    printf("Compilation failed.\n");
+                    free(t);
+                    return EXIT_FAILURE;
+                }
                 char c = token[0];
-                if(token == NULL || !(c == '-'|| c == '<'|| c == '>')) {
+                if (!(c == '-'|| c == '<'|| c == '>')) {
                     printf("Compilation failed.\n");
                     free(t);
                     return EXIT_FAILURE;
