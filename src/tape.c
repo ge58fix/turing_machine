@@ -53,7 +53,7 @@ Tape* move(Tape *t, char dir, char blank) {
         }
         return t->next;
     }
-    if (dir == '_') {
+    if (dir == '-') {
         return t;
     }
     return NULL;
@@ -61,6 +61,9 @@ Tape* move(Tape *t, char dir, char blank) {
 
 void tape_print(Tape* head) {
     Tape* h = head;
+    while(h->prev != NULL) {
+        h = h->prev;
+    }
     printf("|%c|", h->content);
     while(h->next != NULL) {
         h = h->next;

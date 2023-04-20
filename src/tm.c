@@ -190,11 +190,12 @@ void simulate(Turing_Machine *tm, char* input) {
             printf("ACCEPT\n");
             break;
         }
-        if (!accept(tm->accepted_states, current_state)) {
-            printf("REJECT\n");
-        }
         current_tape_symbol = (current_tape == NULL || current_tape->content == '\0') ? blank : current_tape->content;
         current_transition = get_transition(tm->head, current_state, current_tape_symbol);
+        if (current_transition == NULL && !accept(tm->accepted_states, current_state)) {
+            printf("REJECT\n");
+            return;
+        }
         current_state = current_transition->next_state;
         current_tape->content = current_transition->write_symbol;
         current_tape = move(current_tape, current_transition ->direction, blank);
