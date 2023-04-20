@@ -95,5 +95,6 @@ main (int argc, char **argv)
   printf("input_alpha: %s\n", tm->input_alphabet);
   printf("current_state: %s\n", tm->current_state);
   simulate(tm, input);
+  free_all(tm);
   exit(0);
 }

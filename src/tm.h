@@ -13,3 +13,4 @@ typedef struct tm
 int create_tm(char*, Turing_Machine*);
 int validate(char*, const char*);
 void simulate(Turing_Machine *tm, char* input);
+void free_all(Turing_Machine *tm);

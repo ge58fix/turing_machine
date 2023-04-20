@@ -202,3 +202,24 @@ void simulate(Turing_Machine *tm, char* input) {
     }
 }
 
+void free_all(Turing_Machine *tm) {
+    State_List *sl = tm->accepted_states;
+    Transitions *t = tm->head;
+    if (sl != NULL) {
+        while(sl->next != NULL) {
+            State_List *temp_sl = sl;
+            sl = sl->next;
+            free(temp_sl);
+        }
+        free(sl);
+    }
+    if (t != NULL) {
+        while(t->next != NULL) {
+            Transitions *temp_t = t;
+            t = t->next;
+            free(temp_t);
+        }
+        free(t);
+    }
+    free(tm);
+}
