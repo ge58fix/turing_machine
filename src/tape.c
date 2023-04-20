@@ -40,8 +40,6 @@ Tape* tape_add(Tape *t, char direction, char input) {
     return head;
 }
 
-// TODO: What if dir == 'blank'
-
 Tape* move(Tape *t, char dir, char blank) {
     if (dir == '<') {
         if (t->prev == NULL) {
