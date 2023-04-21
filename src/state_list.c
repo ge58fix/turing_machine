@@ -19,7 +19,6 @@ State_List *insert_state(State_List* h, char* state) {
     }
     snprintf(elem->state, sizeof (elem->state), "%s", state);
     elem->next = NULL;
-    elem->prev = head;
     head->next = elem;
     return h;
 }

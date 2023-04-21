@@ -14,7 +14,6 @@ Transitions *add(Transitions *h, Transition *t) {
     }
     link->transition = t;
     link->next = NULL;
-    link->prev = head;
     head->next = link;
     return h;
 }

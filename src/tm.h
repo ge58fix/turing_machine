@@ -10,7 +10,7 @@ typedef struct tm
     Transitions *head;
 } Turing_Machine;
 
-int create_tm(char*, Turing_Machine*);
-int validate(char*, const char*);
+int create_tm(char* filename, Turing_Machine* tm);
+int validate(char* input_alpha, const char* input);
 void simulate(Turing_Machine *tm, char* input);
 void free_all(Turing_Machine *tm);

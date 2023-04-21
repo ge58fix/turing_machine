@@ -5,11 +5,6 @@
 #include <string.h>
 #define SIZE_A 16
 
-
-
-// TODO: Create data structure for accepting states.
-// TODO: Fixing the Transitions.
-
 int create_tm(char *filename, Turing_Machine* tm) {
     FILE *fd;
     char *str = NULL;
@@ -152,7 +147,7 @@ int create_tm(char *filename, Turing_Machine* tm) {
                     return EXIT_FAILURE;
                 }
                 strncpy(&t->direction, &token[0], 1);
-                head = add(head, t); // TODO: Head muss auch befüllt werden mit Transition
+                head = add(head, t);
                 printf("%s\n\n", token);
             }
             else {

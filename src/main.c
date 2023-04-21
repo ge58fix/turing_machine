@@ -3,6 +3,8 @@
 #include <getopt.h>
 #include "tm.h"
 
+// TODO: Adding help-flag and usage.
+
 /* Flag set by ‘--verbose’. */
 static int verbose_flag;
 char *filename;
